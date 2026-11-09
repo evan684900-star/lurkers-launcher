@@ -1,0 +1,12 @@
+{
+  "jrePath": "jre",
+  "classPath": [
+    "traducteur/lurkers-translator.jar"
+  ],
+  "mainClass": "fr.evan.lurkers.traducteur.Main",
+  "useZgcIfSupportedOs": false,
+  "vmArgs": [
+    "-Dfile.encoding=UTF-8",
+    "-Dsun.java2d.uiScale.enabled=true"
+  ]
+}

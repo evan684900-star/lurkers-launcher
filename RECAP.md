@@ -85,3 +85,21 @@
 ## Compiler
 
 Sources dans `lurkers-launcher-source.zip`. Il faut un JDK (le JRE 8 du jeu n'a pas `javac`). `build.sh` compile en `--release 8` avec le .jar du jeu dans `libs/game.jar` comme dépendance ; le résultat va dans `dist/`.
+
+## Lurkers Translator (v1.0.0)
+
+Outil de traduction indépendant (`traducteur/`), **sans aucune modification du jeu** : il lit
+seulement le .jar et écrit un fichier de langue que le jeu sait déjà lire.
+
+- Anglais à gauche, traduction à droite ; liste avec sections, recherche, filtres
+  « À traduire » et « Problèmes », progression.
+- Texte anglais lu dans `desktop-1.0-obf-original.jar` si même version que le .jar actuel
+  (le .jar actuel a pu être modifié à la main), sinon dans `desktop-1.0-obf.jar` ; ou un
+  fichier `language.properties` ouvert à la main (celui du dev).
+- Vérifie les codes `{0}`, `{1}`… et les séparateurs vides ; signale les retours à la ligne différents.
+- « Enregistrer dans le jeu » écrit `i18n/language_<code>.properties` (UTF-8, même ordre et
+  mêmes sections que l'anglais, copie `.bak` de l'ancien). Les textes non traduits ne sont pas
+  écrits : le jeu affiche l'anglais. « Exporter… » enregistre une copie à envoyer au dev.
+- Relire puis réenregistrer `language_fr.properties` sans changement redonne exactement le même fichier.
+- Lancement : copier `lurkers.exe` en `LurkersTranslator.exe` (packr lit `LurkersTranslator.json`),
+  ou double-cliquer `LurkersTranslator.bat` (utilise le `jre` du jeu).

@@ -9,7 +9,7 @@ if [ -f libs/game.jar ]; then GDX=libs/game.jar; else
   GDX=libs/gdx-1.9.10.jar
   [ -f "$GDX" ] || { mkdir -p libs && curl -sSfL -o "$GDX" https://repo1.maven.org/maven2/com/badlogicgames/gdx/gdx/1.9.10/gdx-1.9.10.jar; }
 fi
-rm -rf build dist/modloader/lib dist/modloader/mods dist/launcher/*.jar && mkdir -p build/{boot,core,hud,launcher} dist/modloader/{lib,mods,config} dist/launcher/fr
+rm -rf build dist/modloader/lib dist/modloader/mods dist/launcher/*.jar dist/traducteur && mkdir -p build/{boot,core,hud,launcher,traducteur} dist/modloader/{lib,mods,config} dist/launcher/fr
 # 1. agent (chargeur système) : aucune dépendance à libGDX
 $J -d build/boot $(find loader/src -name '*.java') 2>&1 | grep -Ev "$F" || true
 printf 'Manifest-Version: 1.0\nPremain-Class: fr.evan.lurkers.loader.Agent\nImplementation-Version: 0.1.1\n' > build/boot.mf
@@ -28,4 +28,10 @@ printf 'Manifest-Version: 1.0\nMain-Class: fr.evan.lurkers.launcher.Main\n' > bu
 jar cfm dist/launcher/lurkers-launcher.jar build/launcher.mf -C build/launcher . 2>&1 | grep -v Picked || true
 cp traduction/language_fr.properties dist/launcher/fr/
 cp LurkersLauncher.json dist/
+# 5. traducteur (Lurkers Translator) : outil indépendant, ne touche pas au jeu
+mkdir -p dist/traducteur
+$J -d build/traducteur $(find traducteur/src -name '*.java') 2>&1 | grep -Ev "$F" || true
+printf 'Manifest-Version: 1.0\nMain-Class: fr.evan.lurkers.traducteur.Main\nImplementation-Version: 1.0.0\n' > build/traducteur.mf
+jar cfm dist/traducteur/lurkers-translator.jar build/traducteur.mf -C build/traducteur . 2>&1 | grep -v Picked || true
+cp traducteur/LurkersTranslator.json traducteur/LurkersTranslator.bat dist/
 echo build OK
