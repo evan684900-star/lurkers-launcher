@@ -1,0 +1,12 @@
+{
+  "jrePath": "jre",
+  "classPath": [
+    "launcher/lurkers-launcher.jar"
+  ],
+  "mainClass": "fr.evan.lurkers.launcher.Main",
+  "useZgcIfSupportedOs": false,
+  "vmArgs": [
+    "-Dfile.encoding=UTF-8",
+    "-Dsun.java2d.uiScale.enabled=true"
+  ]
+}
